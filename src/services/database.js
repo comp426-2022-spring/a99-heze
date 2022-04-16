@@ -2,7 +2,7 @@ const database = require('better-sqlite3')
 //create databases
 const userinfo = new database('user.db')
 
-const user_stmt = userdb.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='userinfo';`)
+const user_stmt = userinfo.prepare(`SELECT name FROM sqlite_master WHERE type='table' and name='userinfo';`)
 
 let user_row = user_stmt.get()
 
@@ -10,11 +10,10 @@ let user_row = user_stmt.get()
 if(user_row === undefined) {
     console.log('User database missing')
     var sqlInit = `CREATE TABLE userinfo ( id INTEGER PRIMARY KEY, username TEXT, password TEXT, email TEXT);`
-    userdb.exec(sqlInit)
+    userinfo.exec(sqlInit)
 } else {
     console.log('user database exists')
 }
-
 
 
 module.exports = userinfo

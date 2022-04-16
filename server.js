@@ -53,6 +53,24 @@ app.delete('/app/delete/user', (req, res) => {
   res.status(200).json()
 })
 
+// backend for asking questions
+app.post('/app/survey', (req, res, next) => {
+  let data = {
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email,
+    height: req.body.height,
+    age: req.body.age,
+    sleep: req.body.sleep,
+    mood: req.body.mood,
+    energy: req.body.energy
+  }
+
+  const stmt = survery.prepare('INSERT into surveyinfo (firstname, lastname, email, height, age, sleep, mood, energy) VALUES (?, ?, ?)')
+  const info = stmt.run(data.fname, data.lname, data.email, data.height, data.age, data.sleep, data.mood, data.energy)
+  res.status(200).json()
+})
+
 //default response for any other request
 app.use(function(req, res) {
   res.status(404).send('404 NOT FOUND')
