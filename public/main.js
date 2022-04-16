@@ -1,6 +1,3 @@
-
-
-
 const survey = document.getElementById("survey")
 
 survey.addEventListener("submit", surveyform)
