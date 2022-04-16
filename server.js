@@ -66,7 +66,7 @@ app.post('/app/survey', (req, res, next) => {
     energy: req.body.energy
   }
 
-  const stmt = survery.prepare('INSERT into surveyinfo (firstname, lastname, email, height, age, sleep, mood, energy) VALUES (?, ?, ?)')
+  const stmt = survery.prepare('INSERT into surveyinfo (firstname, lastname, email, height, age, sleep, mood, energy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
   const info = stmt.run(data.fname, data.lname, data.email, data.height, data.age, data.sleep, data.mood, data.energy)
   res.status(200).json()
 })
