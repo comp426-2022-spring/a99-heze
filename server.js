@@ -5,7 +5,8 @@ const app = express()
 const morgan = require('morgan')
 const fs = require('fs')
 // require database script file
-const logdb = require('./src/services/database.js')
+// const logdb = require('./src/services/database.js')
+const surveydb = require('./src/services/database.js')
 
 const cors = require('cors')
 app.use(cors())
@@ -56,19 +57,23 @@ app.delete('/app/delete/user', (req, res) => {
 // backend for asking questions
 app.post('/app/survey', (req, res, next) => {
   let data = {
-    fname: req.body.fname,
-    lname: req.body.lname,
-    email: req.body.email,
-    height: req.body.height,
-    age: req.body.age,
-    sleep: req.body.sleep,
-    mood: req.body.mood,
-    energy: req.body.energy
+      fname: req.body.fname,
+      lname: req.body.lname,
+      height: req.body.height,
+      age: req.body.age,
+      sleep: req.body.sleep,
+      mood: req.body.mood,
+      energy: req.body.energy
   }
 
-  const stmt = survery.prepare('INSERT into surveyinfo (firstname, lastname, email, height, age, sleep, mood, energy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
-  const info = stmt.run(data.fname, data.lname, data.email, data.height, data.age, data.sleep, data.mood, data.energy)
-  res.status(200).json()
+  const stmt = surveydb.prepare('INSERT INTO surveyinfo (firstname, lastname, height, age, sleep, mood, energy) VALUES (?, ?, ?, ?, ?, ?, ?)')
+  const info = stmt.run(data.fname, data.lname, data.height, data.age, data.sleep, data.mood, data.energy)
+  res.status(200).json({'fname': data.fname, 'lname': data.lname, 'height': data.height, 'age': data.age, 'sleep': data.sleep, 'mood': data.mood, 'energy': data.energy})
+})
+
+app.get('/app/results', (req, res, next) => {
+  const stmt = surveydb.prepare('SELECT * FROM surveyinfo ORDER BY id DESC LIMIT 1').get()
+  res.status(200).json(stmt)
 })
 
 //default response for any other request

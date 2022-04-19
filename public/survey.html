@@ -10,6 +10,7 @@
 <body>
 
     <!-- navigation bar -->
+    <base href="/">
     <nav class="navbar navbar-expand">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
@@ -34,7 +35,7 @@
 
     <!-- content -->
     <div class='container'>
-        <form method="post">
+        <form id="survey">
             <label for="fname">First name:</label>
             <br />
             <input type="text" id="fname" name="fname">
@@ -45,10 +46,12 @@
             <input type="text" id="lname" name="lname">
             <br />
             <br />
+            <!--
             <label for="number">Phone number (for delivering your results by text): </label>
             <br />
             <input type="text" id="number" name="number">
             <br />
+            -->
             <br />
             <label for="height">Height in inches:</label>
             <br />
@@ -87,6 +90,7 @@
             </select>
             <br />
             <br />
+            <!--
             <label for="symptoms">Are you experiencing any of the following symptoms today? Do not select any symptoms that you regularly experience.</label>
             <select id="symptoms" name="symptoms">
                 <option value="none">None</option>
@@ -109,10 +113,62 @@
             </select>
             <br />
             <br />
+        -->
             <!-- TODO: possibly change age to bday -->
             <input type="submit" value="Submit">
+            <p id="first"></p>
         </form>
     </div>
+    <script>
+const survey = document.getElementById("survey")
+
+survey.addEventListener("submit", surveyform)
+
+async function surveyform(event) {
+
+    event.preventDefault()
+
+    const endpoint = "app/survey/"
+    const url = document.baseURI+endpoint
+    const formEvent = event.currentTarget
+
+    console.log(url)
+
+    try {
+        const formData = new FormData(formEvent)
+        console.log(formData)
+        const survey_app = await sendSurvey({url, formData})
+
+       // document.getElementById("first").innerHTML = "first name: "+survey_app.fname
+        console.log(survey_app)
+    } catch (error) {
+        console.log(error)
+    }
+
+    var new_url = document.baseURI+"result.html"
+    window.location = new_url
+    consol.log(formData)
+}
+
+async function sendSurvey({url, formData}) {
+    const plainFormData = Object.fromEntries(formData.entries())
+    const formDataJson = JSON.stringify(plainFormData)
+    console.log(formDataJson)
+
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json"
+        },
+        body: formDataJson
+    }
+
+    const response = await fetch(url, options);
+    return response.json()
+}
+
+    </script>
 </body>
 
 </html>

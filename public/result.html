@@ -10,6 +10,7 @@
 <body>
 
     <!-- navigation bar -->
+    <base href="/">
     <nav class="navbar navbar-expand">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
@@ -34,14 +35,72 @@
 
     <!-- content -->
     <div class='container'>
+        <button id="results">Click for results</button>
         <h2>Here are your personalized recommendations based on your survey responses &#9825;</h2>
         <br></br>
-        <p>{{summary}}</p>
-        <form method="get">
+        <p id="name"></p>
+        <p id="stats"></p>
+        <p id="height"></p>
+        <p id="age"></p>
+        <p id="sleep"></p>
+        <p id="mood"></p>
+        <p id="energy"></p>
+        <form id="retake">
             <input type="submit" value="Take the survey again!">
         </form>
 
     </div>
+    <script>
+        const result = document.getElementById("results")
+        result.addEventListener("click", getResults)
+
+        async function getResults(event) {
+            event.preventDefault();
+
+            const endpoint = "app/results/"
+            const url = document.baseURI+endpoint
+
+            try {
+                console.log("before await")
+                const results = await sendResults(url)
+                console.log(results)
+
+                document.getElementById("name").innerHTML = "Name: "+results.firstname+" "+results.lastname
+                document.getElementById("stats").innerHTML = "Height: "+results.height+" Age: "+results.age+" Sleep: "+results.sleep
+                document.getElementById("energy").innerHTML= "Energy: "+results.energy+" Mood: "+results.mood
+
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+
+        async function sendResults(url) {
+            console.log("start send function")
+            const options = {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+            }
+            const response = await fetch(url, options);
+            return response.json()
+        }
+
+        // retake for option on results
+        const retake = document.getElementById("retake")
+        retake.addEventListener("submit", retakeform)
+
+        function retakeform(event) {
+            event.preventDefault()
+            
+            var survey = "survey.html"
+            var url = document.baseURI+survey
+            window.location = url
+
+        }
+    </script>
 </body>
 
 </html>
