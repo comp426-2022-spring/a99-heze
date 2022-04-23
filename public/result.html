@@ -38,19 +38,17 @@
         <button id="results">Click for results</button>
         <h2>Here are your personalized recommendations based on your survey responses &#9825;</h2>
         <br></br>
-        <p id="name"></p>
-        <p id="stats"></p>
-        <p id="height"></p>
-        <p id="age"></p>
+        <p id="intro"></p>
+        <p id="water"></p>
         <p id="sleep"></p>
-        <p id="mood"></p>
-        <p id="energy"></p>
+
         <form id="retake">
             <input type="submit" value="Take the survey again!">
         </form>
 
     </div>
     <script>
+        
         const result = document.getElementById("results")
         result.addEventListener("click", getResults)
 
@@ -65,9 +63,12 @@
                 const results = await sendResults(url)
                 console.log(results)
 
-                document.getElementById("name").innerHTML = "Name: "+results.firstname+" "+results.lastname
-                document.getElementById("stats").innerHTML = "Height: "+results.height+" Age: "+results.age+" Sleep: "+results.sleep
-                document.getElementById("energy").innerHTML= "Energy: "+results.energy+" Mood: "+results.mood
+                var intro_message = 'Thanks for filling out the Survey, '+results.fname+' '+results.lname+'. Based on your responses here are some recommendations'
+                var water_message = 'The recommended amount of water you should consume based on your age is '+results.rwater+' of water per day'
+                var sleep_message = 'The recommended amount of sleep you should get based on your age is '+results.rsleep+' you got '+results.sleep+' hours of sleep last night'
+                document.getElementById("intro").innerHTML = intro_message
+                document.getElementById("water").innerHTML = water_message
+                document.getElementById("sleep").innerHTML= sleep_message
 
             } catch (error) {
                 console.log(error)
