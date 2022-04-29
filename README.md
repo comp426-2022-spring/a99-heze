@@ -2,9 +2,9 @@
 
 # Health Survey
 
-This project is a COVID-19 related health survey that aims to provide a private, informative and intuitive app to participants. We collect the daily updates from participants and provide them with personalized recommendations as well as useful COVID-19 related resources. We believe a small change of this survey app could make a big difference and help you :)
+This project, myHealth, is a COVID-19 related health survey that aims to provide a private, informative and intuitive app to participants. We collect the daily updates from participants and provide them with personalized recommendations as well as useful COVID-19 related resources. We believe a small change of this survey app could make a big difference and help you. Public health starts with focusing on individual health, which is why we wanted to make a survey that documents how individuals are feeling daily. Health is largely an individual responsibility which myHealth promotes.  
 
-# Installation Instruction:
+# Installation Instructions:
 
 ## 1. Clone the repository
 
