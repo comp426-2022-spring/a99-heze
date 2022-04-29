@@ -59,13 +59,11 @@
             const url = document.baseURI+endpoint
 
             try {
-                console.log("before await")
                 const results = await sendResults(url)
-                console.log(results)
 
-                var intro_message = 'Thanks for filling out the Survey, '+results.fname+' '+results.lname+'. Based on your responses here are some recommendations'
-                var water_message = 'The recommended amount of water you should consume based on your age is '+results.rwater+' of water per day'
-                var sleep_message = 'The recommended amount of sleep you should get based on your age is '+results.rsleep+' you got '+results.sleep+' hours of sleep last night'
+                var intro_message = 'Thanks for filling out the Survey, '+results.fname+' '+results.lname+'. Based on your responses here are some recommendations based on CDC guidance:'
+                var water_message = 'The recommended amount of water you should consume based on your age is '+results.rwater+' of water per day.'
+                var sleep_message = 'The recommended amount of sleep you should get based on your age is '+results.rsleep+' you got '+results.sleep+' hours of sleep last night.'
                 document.getElementById("intro").innerHTML = intro_message
                 document.getElementById("water").innerHTML = water_message
                 document.getElementById("sleep").innerHTML= sleep_message
@@ -77,7 +75,6 @@
         }
 
         async function sendResults(url) {
-            console.log("start send function")
             const options = {
                 method: "GET",
                 headers: {

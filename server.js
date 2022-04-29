@@ -56,26 +56,6 @@ app.get('/app/', (req, res) => {
   res.end(res.statusCode + ' ' + res.statusMessage)
 })
 
-// add new user
-app.post('/app/new/user', (req, res, next) => {
-  let data = {
-  user: req.body.username,
-  pass: req.body.password,
-  email: req.body.email
-  }
-  const stmt = logdb.prepare('INSERT INTO userinfo (username, password, email) VALUES (?, ?, ?)')
-  const info = stmt.run(data.user, data.pass, data.email)
-  next()
-  res.status(200).json(info)
-})
-
-//delete a single user
-app.delete('/app/delete/user', (req, res) => {
-  const stmt = logdb.prepare('DELETE FROM userinfo WHERE email = ?')
-  const info = stmt.run(req.body.delete_user)
-  res.status(200).json()
-})
-
 // backend for asking questions
 app.post('/app/survey', (req, res, next) => {
   let data = {
@@ -85,14 +65,12 @@ app.post('/app/survey', (req, res, next) => {
       height: req.body.height,
       age: req.body.age,
       sleep: req.body.sleep,
-      mood: req.body.mood,
-      energy: req.body.energy,
       symptoms: req.body.symptoms
   }
 
-  const stmt = surveydb.prepare('INSERT INTO surveyinfo (firstname, lastname, email, height, age, sleep, mood, energy, symptoms) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-  const info = stmt.run(data.fname, data.lname, data.email, data.height, data.age, data.sleep, data.mood, data.energy, data.symptoms)
-  res.status(200).json({'fname': data.fname, 'lname': data.lname, 'email': data.email, 'height': data.height, 'age': data.age, 'sleep': data.sleep, 'mood': data.mood, 'energy': data.energy, 'symptoms': data.symptoms})
+  const stmt = surveydb.prepare('INSERT INTO surveyinfo (firstname, lastname, email, height, age, sleep, symptoms) VALUES (?, ?, ?, ?, ?, ?, ?)')
+  const info = stmt.run(data.fname, data.lname, data.email, data.height, data.age, data.sleep, data.symptoms)
+  res.status(200).json({'fname': data.fname, 'lname': data.lname, 'email': data.email, 'height': data.height, 'age': data.age, 'sleep': data.sleep, 'symptoms': data.symptoms})
 })
 
 app.get('/app/results', (req, res, next) => {
