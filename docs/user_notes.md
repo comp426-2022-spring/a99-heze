@@ -8,8 +8,7 @@
         - Height in inches
         - Age
         - Hours of Sleep
-        - Feeling
-        - Energy Level
+        - Symptoms
 
     - Results:
         - Personal results
@@ -23,7 +22,6 @@
     - index.html
     - survey.html
     - result.html
-    - all-results.html
     - resources.html
 
 ## JS files:
